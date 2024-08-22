@@ -1,0 +1,125 @@
+{
+    "reviews": [
+      {
+        "professor": "Dr. Jane Smith",
+        "subject": "Introduction to Psychology",
+        "stars": 5,
+        "review": "Dr. Smith is an amazing professor! Her lectures are engaging, and she really cares about her students."
+      },
+      {
+        "professor": "Prof. John Doe",
+        "subject": "Calculus I",
+        "stars": 4,
+        "review": "Prof. Doe is a good teacher, but his exams can be tough. Make sure to stay on top of the material."
+      },
+      {
+        "professor": "Dr. Emily Brown",
+        "subject": "American History",
+        "stars": 3,
+        "review": "Dr. Brown's lectures are informative, but she sometimes goes off on tangents."
+      },
+      {
+        "professor": "Prof. Michael Johnson",
+        "subject": "Organic Chemistry",
+        "stars": 2,
+        "review": "The material is hard, and Prof. Johnson's explanations are not always clear."
+      },
+      {
+        "professor": "Dr. Sarah Wilson",
+        "subject": "Macroeconomics",
+        "stars": 5,
+        "review": "Dr. Wilson is an excellent professor! She explains complex concepts in an easy-to-understand way."
+      },
+      {
+        "professor": "Prof. Robert Lee",
+        "subject": "World Literature",
+        "stars": 4,
+        "review": "Prof. Lee is passionate about literature, and his classes are always interesting."
+      },
+      {
+        "professor": "Dr. Linda White",
+        "subject": "Biology 101",
+        "stars": 3,
+        "review": "Dr. White is knowledgeable, but her lectures can be a bit dry."
+      },
+      {
+        "professor": "Prof. William Taylor",
+        "subject": "Physics II",
+        "stars": 2,
+        "review": "The material is challenging, and Prof. Taylor's teaching style is not very engaging."
+      },
+      {
+        "professor": "Dr. Patricia Anderson",
+        "subject": "Philosophy of Mind",
+        "stars": 5,
+        "review": "Dr. Anderson is brilliant! Her lectures are thought-provoking, and she encourages deep discussions."
+      },
+      {
+        "professor": "Prof. Christopher Thomas",
+        "subject": "Computer Science 101",
+        "stars": 4,
+        "review": "Prof. Thomas is a good instructor, but the pace of the course can be overwhelming."
+      },
+      {
+        "professor": "Dr. Barbara Martinez",
+        "subject": "Sociology",
+        "stars": 5,
+        "review": "Dr. Martinez is a fantastic professor! She connects well with students and makes the material relevant."
+      },
+      {
+        "professor": "Prof. Anthony Garcia",
+        "subject": "Introduction to Art",
+        "stars": 3,
+        "review": "Prof. Garcia is creative, but sometimes his instructions are unclear."
+      },
+      {
+        "professor": "Dr. Susan Clark",
+        "subject": "Environmental Science",
+        "stars": 4,
+        "review": "Dr. Clark is passionate about the environment and teaches with real-world examples."
+      },
+      {
+        "professor": "Prof. Kevin Lewis",
+        "subject": "Statistics",
+        "stars": 3,
+        "review": "The course is tough, and Prof. Lewis is not very approachable."
+      },
+      {
+        "professor": "Dr. Maria Walker",
+        "subject": "Anthropology",
+        "stars": 5,
+        "review": "Dr. Walker's classes are fascinating, and she always provides great insights."
+      },
+      {
+        "professor": "Prof. James Hall",
+        "subject": "Advanced Calculus",
+        "stars": 2,
+        "review": "Prof. Hall is knowledgeable, but his teaching style is confusing."
+      },
+      {
+        "professor": "Dr. Elizabeth Young",
+        "subject": "Political Science",
+        "stars": 4,
+        "review": "Dr. Young is a great professor, but her grading is very strict."
+      },
+      {
+        "professor": "Prof. Richard King",
+        "subject": "Introduction to Programming",
+        "stars": 3,
+        "review": "Prof. King is good at explaining concepts, but the course is very demanding."
+      },
+      {
+        "professor": "Dr. Nancy Hernandez",
+        "subject": "Chemistry 101",
+        "stars": 5,
+        "review": "Dr. Hernandez is an excellent professor! Her labs are well-organized, and she makes chemistry fun."
+      },
+      {
+        "professor": "Prof. Steven Wright",
+        "subject": "Ethics",
+        "stars": 4,
+        "review": "Prof. Wright encourages critical thinking and leads engaging class discussions."
+      }
+    ]
+  }
+  
