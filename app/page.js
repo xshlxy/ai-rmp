@@ -1,111 +1,203 @@
-'use client'
-import { Box, Button, Stack, TextField } from '@mui/material'
-import { useState } from 'react'
+'use client';
+import {useState, useRef, useEffect} from 'react';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
+import {
+    Box,
+    TextField,
+    IconButton,
+    Typography,
+    CssBaseline,
+    Paper,
+    AppBar,
+    Toolbar,
+} from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+
+const darkTheme = createTheme({
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: '#f4f1de',
+        },
+        secondary: {
+            main: '#e07a5f',
+        },
+        background: {
+            default: '#3d405b',
+            paper: '#3d405b',
+            secondary: '#81b29a',
+        },
+    },
+    typography: {
+        fontFamily: '"Fira Code", monospace',
+    },
+});
 
 export default function Home() {
-  const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      content: `Hi! I'm the Rate My Professor support assistant. How can I help you today?`,
-    },
-  ])
-  const [message, setMessage] = useState('')
+    const [messages, setMessages] = useState([
+        {
+            role: 'assistant',
+            content: `Hi! I'm the Rate My Professor support assistant. How can I help you today?`,
+        },
+    ]);
+    const [message, setMessage] = useState('');
+    const messagesEndRef = useRef(null);
 
-  const sendMessage = async () => {
-    setMessage('')
-    setMessages((messages) => [
-      ...messages,
-      {role: 'user', content: message},
-      {role: 'assistant', content: ''},
-    ])
-  
-    const response = fetch('/api/chat', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify([...messages, {role: 'user', content: message}]),
-    }).then(async (res) => {
-      const reader = res.body.getReader()
-      const decoder = new TextDecoder()
-      let result = ''
-  
-      return reader.read().then(function processText({done, value}) {
-        if (done) {
-          return result
-        }
-        const text = decoder.decode(value || new Uint8Array(), {stream: true})
-        setMessages((messages) => {
-          let lastMessage = messages[messages.length - 1]
-          let otherMessages = messages.slice(0, messages.length - 1)
-          return [
-            ...otherMessages,
-            {...lastMessage, content: lastMessage.content + text},
-          ]
-        })
-        return reader.read().then(processText)
-      })
-    })
-  }
-  return (
-    <Box
-      width="100vw"
-      height="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        direction={'column'}
-        width="500px"
-        height="700px"
-        border="1px solid black"
-        p={2}
-        spacing={3}
-      >
-        <Stack
-          direction={'column'}
-          spacing={2}
-          flexGrow={1}
-          overflow="auto"
-          maxHeight="100%"
-        >
-          {messages.map((message, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent={
-                message.role === 'assistant' ? 'flex-start' : 'flex-end'
-              }
-            >
-              <Box
-                bgcolor={
-                  message.role === 'assistant'
-                    ? 'primary.main'
-                    : 'secondary.main'
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
+    };
+
+    useEffect(scrollToBottom, [messages]);
+
+    const sendMessage = async () => {
+        if (!message.trim()) return;
+
+        setMessage('');
+        setMessages((messages) => [
+            ...messages,
+            {role: 'user', content: message},
+            {role: 'assistant', content: ''},
+        ]);
+
+        const response = fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify([...messages, {role: 'user', content: message}]),
+        }).then(async (res) => {
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            let result = '';
+
+            return reader.read().then(function processText({done, value}) {
+                if (done) {
+                    return result;
                 }
-                color="white"
-                borderRadius={16}
-                p={3}
-              >
-                {message.content}
-              </Box>
+                const text = decoder.decode(value || new Uint8Array(), {stream: true});
+                setMessages((messages) => {
+                    let lastMessage = messages[messages.length - 1];
+                    let otherMessages = messages.slice(0, messages.length - 1);
+                    return [
+                        ...otherMessages,
+                        {...lastMessage, content: lastMessage.content + text},
+                    ];
+                });
+                return reader.read().then(processText);
+            });
+        });
+    };
+
+    return (
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline/>
+            <Box sx={{display: 'flex', height: '100vh'}}>
+                <AppBar position="fixed" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
+                    <Toolbar>
+                        <Typography variant="h6" noWrap component="div">
+                            GEORGIA TECH UNIVERSITY | Choose A Professor Chat
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <Box component="main" sx={{flexGrow: 1, p: 3}}>
+                    <Toolbar/>
+                    <Paper
+                        elevation={4}
+                        sx={{
+                            height: 'calc(100vh - 140px)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            bgcolor: 'background.paper',
+                            borderRadius: '12px',
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <Box
+                            sx={{
+                                flexGrow: 1,
+                                overflow: 'auto',
+                                p: 2,
+                                display: 'flex',
+                                flexDirection: 'column',
+                            }}
+                        >
+                            {messages.map((message, index) => (
+                                <Box
+                                    key={index}
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: message.role === 'assistant' ? 'flex-start' : 'flex-end',
+                                        mb: 2,
+                                    }}
+                                >
+                                    <Paper
+                                        elevation={1}
+                                        sx={{
+                                            bgcolor: message.role === 'assistant' ? 'background.default' : 'primary.main',
+                                            color: message.role === 'assistant' ? 'text.primary' : 'background.default',
+                                            borderRadius: '12px',
+                                            p: 2,
+                                            maxWidth: '70%',
+                                        }}
+                                    >
+                                        <Typography variant="body1">
+                                            {message.content}
+                                        </Typography>
+                                    </Paper>
+                                </Box>
+                            ))}
+                            <div ref={messagesEndRef}/>
+                        </Box>
+                        <Box
+                            component="form"
+                            sx={{
+                                p: 2,
+                                bgcolor: 'background.default',
+                                display: 'flex',
+                            }}
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                sendMessage();
+                            }}
+                        >
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                placeholder="Type your message..."
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                sx={{
+                                    mr: 1,
+                                    '& .MuiOutlinedInput-root': {
+                                        '& fieldset': {
+                                            borderColor: 'rgba(255, 255, 255, 0.23)',
+                                        },
+                                        '&:hover fieldset': {
+                                            borderColor: 'primary.main',
+                                        },
+                                        '&.Mui-focused fieldset': {
+                                            borderColor: 'primary.main',
+                                        },
+                                    },
+                                }}
+                            />
+                            <IconButton
+                                color="secondary"
+                                onClick={sendMessage}
+                                sx={{
+                                    bgcolor: 'secondary.main',
+                                    color: 'background.default',
+                                    '&:hover': {
+                                        bgcolor: 'secondary.dark',
+                                    },
+                                }}
+                            >
+                                <SendIcon/>
+                            </IconButton>
+                        </Box>
+                    </Paper>
+                </Box>
             </Box>
-          ))}
-        </Stack>
-        <Stack direction={'row'} spacing={2}>
-          <TextField
-            label="Message"
-            fullWidth
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <Button variant="contained" onClick={sendMessage}>
-            Send
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
-  )
+        </ThemeProvider>
+    );
 }
